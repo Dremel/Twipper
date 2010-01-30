@@ -1,4 +1,7 @@
 [
+    {"source": "javascript\/debug.js"},
+    {"source": "javascript\/utility.js"},
+    {"source": "javascript\/dbhelper.js"},
     {"source": "app\/assistants\/stage-assistant.js"},
     {
         "source": "app\/assistants\/main-assistant.js",
