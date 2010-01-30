@@ -106,6 +106,16 @@ var setupDB = function() {
     Twipper.dbs.external.add_table(twip_history);
 };
 
+var initDB = function() {
+    var sqlArray;
+    var initital_user = {
+        'twipper_id': 1
+    }
+    
+    sqlArray = twipper_users.get_insertSql(initital_user);
+    Twipper.dbs.internal.insert_record(twipper_users, initital_user);
+};
+
 // end db setup
 
 // cookies
@@ -114,7 +124,8 @@ Twipper.Bakery = {
         'cookie': new Mojo.Model.Cookie('twipperCookie'),
         'dough': { // set default property values here
             'installed': false,
-            'twipper_id': ''
+            'twipper_id': '',
+            'quiet_login': false
         }
     },
     'bake': function(cookieName) {
@@ -141,23 +152,26 @@ var firstRun = function() {
 
 function StageAssistant() {
     //debugObject(Twipper.Bakery.install.cookie.get());
+    setupDB();
     if (firstRun()) {
         debugString('NEED TO INITIALIZE');
-        setupDB();
+        
         Twipper.Bakery.twipperCookie.dough.installed = true;
-        Twipper.Bakery.twipperCookie.dough.twipper_id = '';
+        initDB();
+        Twipper.Bakery.twipperCookie.dough.twipper_id = 1;
+        
         Twipper.Bakery.bake('twipperCookie');
     } else {
         debugString('NEED TO LOAD COOKIES');
         Twipper.Bakery.loadCookies();
-        debugObject(Twipper.Bakery.twipperCookie.cookie.get());
+        debugObject(Twipper.Bakery.twipperCookie.dough);
+        if (Twipper.Bakery.twipperCookie.dough.quiet_login) {
+            // need to read db
+        }
     }
 }
 
 StageAssistant.prototype.setup = function() {
-    Twipper.testData = {};
-    Twipper.testData.twitter_username = '';
-    Twipper.testData.twitter_password = '';
-
+    
     this.controller.pushScene('main');
 }
