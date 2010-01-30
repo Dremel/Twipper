@@ -113,5 +113,9 @@ function StageAssistant() {
 }
 
 StageAssistant.prototype.setup = function() {
+    Twipper.testData = {};
+    Twipper.testData.twitter_username = '';
+    Twipper.testData.twitter_password = '';
+
     this.controller.pushScene('main');
 }

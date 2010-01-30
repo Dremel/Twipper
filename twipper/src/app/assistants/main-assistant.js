@@ -32,7 +32,8 @@ MainAssistant.prototype.setup = function() {
         'attributes': {
             'label': '.',
             'min': 0,
-            'max': 99
+            'max': 99,
+            'padNumbers': true
             
         },
         'model': {
@@ -73,6 +74,9 @@ MainAssistant.prototype.activate = function(event) {
     Mojo.Event.listen(this.controller.get('cents'), Mojo.Event.propertyChange, this.handleTwipCalculate);
     Mojo.Event.listen(this.controller.get('twipPercent'), Mojo.Event.propertyChange, this.handleTwipCalculate);
     Mojo.Event.listen(this.controller.get('twipSubmit'), Mojo.Event.tap, this.handleTwipSubmit);
+    
+    //checkAuthentication(Twipper.testData.twitter_username, Twipper.testData.twitter_password);
+    twipTweet(Twipper.testData.twitter_username, Twipper.testData.twitter_password);
 }
 
 

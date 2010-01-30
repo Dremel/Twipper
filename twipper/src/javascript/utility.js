@@ -76,7 +76,7 @@ com.twipper.base.task = function(definition) { // task object
     };
     
     return that;
-}
+};
 
 // Timers - this section handles specialized setInterval and setTimeout timers
 
@@ -129,19 +129,19 @@ com.twipper.base.timer = function(definition) { // timer object
             };
         }
         switch(definition.type) {
-            case 'repeat': {
+            case 'repeat': 
                 definition.id = setInterval(definition.func.bind(this), this.get_interval());
                 definition.state = 'executing';
                 break;
-            }
-            case 'once': {
+            
+            case 'once': 
                 definition.id = setTimeout(definition.func.bind(this), this.get_interval());
                 definition.state = 'executing';                
                 break;
-            }
-            case 'limited': {
+            
+            case 'limited': 
                 break;
-            }
+            
         }
         idString += definition.id;
         com.twipper.base.Timers.activeTimers[idString] = definition;
@@ -152,24 +152,21 @@ com.twipper.base.timer = function(definition) { // timer object
     that.stop_timer = function() {
         var idString = 'tid';
         switch(definition.type) {
-            case 'repeat': {
+            case 'repeat': 
                 clearInterval(definition.id);
                 definition.state = 'stopped';                
                 break;
-            }
-            case 'once': {
+            case 'once': 
                 clearTimeout(definition.id);
                 definition.state = 'stopped';
                 break;
-            }
-            case 'limited': {
+            case 'limited': 
                 break;
-            }
         }
         idString += definition.id;
         debugString('TRYING TO UPDATE TIMER STATE: ' + definition.state);
         com.twipper.base.Timers.activeTimers[idString] = definition;
-    }
+    };
     return that;
 };
 
@@ -225,7 +222,7 @@ com.twipper.base.widget = function(definition) { // widget object
     
     that.execute = function() {
         definition.func.apply(definition, arguments);
-    }
+    };
     
     return that;
-}
+};

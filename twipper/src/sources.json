@@ -1,8 +1,10 @@
 [
     {"source": "javascript\/debug.js"},
+    {"source": "javascript\/base64.js"},
     {"source": "javascript\/utility.js"},
     {"source": "javascript\/dbhelper.js"},
     {"source": "app\/assistants\/stage-assistant.js"},
+    {"source": "javascript\/twitter.js"},
     {
         "source": "app\/assistants\/main-assistant.js",
         "scenes": "main"

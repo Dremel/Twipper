@@ -17,20 +17,21 @@ var debugString = function(msg){
 };
 
 var debugObject = function(obj, reflectType){
+    var i;
     if(reflectType === 'properties') {
-        for(var i in obj) {
+        for(i in obj) {
             if(obj.hasOwnProperty(i)) {
                 debugString('OBJECT ITERATION: ' + i + ' : ' + obj[i]);
             }
         }
     } else if(reflectType === 'noFuncs') {
-        for(var i in obj) {
+        for(i in obj) {
             if(typeof obj[i] !== 'function') {
                 debugString('OBJECT ITERATION: ' + i + ' : ' + obj[i]);
             }
         }
     } else {
-        for(var i in obj) {
+        for(i in obj) {
             debugString('OBJECT ITERATION: ' + i + ' : ' + obj[i]);
         }
 

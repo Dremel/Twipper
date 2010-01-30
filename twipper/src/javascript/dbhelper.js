@@ -7,7 +7,7 @@ var com;
 if (!com || !com.twipper || !com.twipper.base) {
     throw new Error('utility.js has not been loaded');
 } else {
-    com.twipper.db = {}
+    com.twipper.db = {};
 }
 
 com.twipper.db.dbColumn = function(definition) {
@@ -45,7 +45,7 @@ com.twipper.db.dbTable = function(definition) {
     
     if (!definition.columns) {
         try {
-            throw ('No columns defined for table: ' + definition.name);;
+            throw ('No columns defined for table: ' + definition.name);
         }
         catch(e) {
             debugError('catastrophic', e);
@@ -96,9 +96,9 @@ com.twipper.db.dbTable = function(definition) {
         var sqlArray = [];
         var values = [];
         var inserts = [];
-        var columns = []
+        var columns = [];
         sql = "INSERT OR REPLACE INTO '" + definition.name + "'";
-        for (i in record) {
+        for (var i in record) {
             inserts.push('?');
             values.push(record[i]);
             columns.push(i.toString());
@@ -116,7 +116,7 @@ com.twipper.db.dbTable = function(definition) {
             limiters = [];
         }
         if (limiters.length > 0) {
-            sql += " WHERE "            
+            sql += " WHERE ";
             for (i = 0; i < limiters.length; i += 1) {
                 sql += limiters[i].column + limiters[i].operand + "'" + limiters[i].value + "'" + (limiters[i].connector ? " " + limiters[i].connector + " " : "");
             }
@@ -165,7 +165,7 @@ com.twipper.db.dbInstance = function(definition) {
     
     that.get_connection = function() {
         return definition.connection;
-    }
+    };
     
     that.add_table = function(table, onSuccess, args) {
         definition.connection.transaction(function(transaction) {
@@ -222,7 +222,7 @@ com.twipper.db.dbInstance = function(definition) {
                                    }.bind(this),
                                    function(transaction, error) {
                                    }.bind(this));
-        }.bind(this))
+        }.bind(this));
     };
     
     that.get_all_records = function(table, storageObject, synchronizer) {
