@@ -106,10 +106,52 @@ var setupDB = function() {
     Twipper.dbs.external.add_table(twip_history);
 };
 
+// end db setup
+
+// cookies
+Twipper.Bakery = {
+    'twipperCookie': {
+        'cookie': new Mojo.Model.Cookie('twipperCookie'),
+        'dough': { // set default property values here
+            'installed': false,
+            'twipper_id': ''
+        }
+    },
+    'bake': function(cookieName) {
+        Twipper.Bakery[cookieName].cookie.put(Twipper.Bakery[cookieName].dough);
+    },
+    'loadCookies': function() {
+        var cookieName, properties;
+        for (cookieName in Twipper.Bakery) {
+            if (typeof(Twipper.Bakery[cookieName]) === 'object' && Twipper.Bakery[cookieName].cookie) {
+                properties = Twipper.Bakery[cookieName].cookie.get();
+                Twipper.Bakery[cookieName].dough = properties;
+            }
+        }
+    }
+};
+
+var firstRun = function() {
+    return !(Twipper.Bakery.twipperCookie.cookie.get() ? Twipper.Bakery.twipperCookie.cookie.get().installed : false);
+};
+
+// end cookies
+
 // end candidate section
 
 function StageAssistant() {
-    setupDB();
+    //debugObject(Twipper.Bakery.install.cookie.get());
+    if (firstRun()) {
+        debugString('NEED TO INITIALIZE');
+        setupDB();
+        Twipper.Bakery.twipperCookie.dough.installed = true;
+        Twipper.Bakery.twipperCookie.dough.twipper_id = '';
+        Twipper.Bakery.bake('twipperCookie');
+    } else {
+        debugString('NEED TO LOAD COOKIES');
+        Twipper.Bakery.loadCookies();
+        debugObject(Twipper.Bakery.twipperCookie.cookie.get());
+    }
 }
 
 StageAssistant.prototype.setup = function() {

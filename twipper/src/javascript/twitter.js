@@ -20,23 +20,31 @@ var checkAuthentication = function(username, password) {
 
 //checkAuthentication();
 
-var twipTweet = function(username, password) {
+var twipTweet = function(username, password, status, activityButton) {
     var url = 'https://twitter.com/statuses/update.json';
+    navigator.userAgent = 'Twipper';
     var tweet = new Ajax.Request(url, {
         'method': 'post',
         'requestHeaders': {
-            'Authorization': 'Basic ' + Base64.encode(Twipper.testData.twitter_username + ':' + Twipper.testData.twitter_password)
+            'Authorization': 'Basic ' + Base64.encode(username + ':' + password)
         },
         'evalJSON': true,
         'parameters': {
-            'status': 'Test of the API'
+            'status': status ? status : 'Twipper test message'
         },
         'onSuccess': function(response) {
-            debugString('CHECK FOR SUCCESSFUL TWEET!');
+            //debugObject(response.responseJSON);
+            //debugString('CHECK FOR SUCCESSFUL TWEET!');
+            if (activityButton) {
+                activityButton.mojo.deactivate();
+            }
         }.bind(this),
         'onFailure': function(response) {
-            debugObject(response.responseJSON);
-            debugError('catastrophic', 'COULD NOT TWEET');
+            //debugObject(response.responseJSON);
+            //debugError('catastrophic', 'COULD NOT TWEET');
+            if (activityButton) {
+                activityButton.mojo.deactivate();
+            }
         }.bind(this)
     });
 };

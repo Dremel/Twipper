@@ -76,7 +76,6 @@ MainAssistant.prototype.activate = function(event) {
     Mojo.Event.listen(this.controller.get('twipSubmit'), Mojo.Event.tap, this.handleTwipSubmit);
     
     //checkAuthentication(Twipper.testData.twitter_username, Twipper.testData.twitter_password);
-    twipTweet(Twipper.testData.twitter_username, Twipper.testData.twitter_password);
 }
 
 
@@ -98,7 +97,7 @@ MainAssistant.prototype.cleanup = function(event) {
 MainAssistant.prototype.calculateTwip = function(event) {
     var dollars, cents, billTotal, twipPercent;
     
-    dollars = Math.round(this.dollars.get_model().value * 100);
+    dollars = Math.round(this.dollars.get_model().value * 100); // convert to pennies
     cents = this.cents.get_model().value;
     twipPercent = this.twipPercent.get_model().value;
     billTotal = dollars + cents;
@@ -108,9 +107,17 @@ MainAssistant.prototype.calculateTwip = function(event) {
 }
 
 MainAssistant.prototype.submitTwip = function(event) {
-    //debugObject(event.target, 'noFuncs');
-    debugString(event.target.id);
-    debugString(event.currentTarget.id);
-    this.controller.get(event.currentTarget.id).mojo.deactivate();
-    debugString('SUBMISSION GOES HERE');
+    var dollars, cents, billTotal, twipPercent, spinnerButton, statusMessage;
+    
+    dollars = Math.round(this.dollars.get_model().value * 100); // convert to pennies
+    cents = this.cents.get_model().value;
+    twipPercent = this.twipPercent.get_model().value;
+    billTotal = dollars + cents;
+    spinnerButton = this.controller.get(event.currentTarget.id); // will be passing this to the tweet function
+    statusMessage = 'I just tipped $';
+    statusMessage += (Math.round((billTotal * twipPercent / 100)) / 100).toFixed(2) + ' for a $';
+    statusMessage += (billTotal / 100).toFixed(2) + ' meal';
+    
+    debugString('SUBMISSION GOES HERE: ' + statusMessage);
+    twipTweet(Twipper.testData.twitter_username, Twipper.testData.twitter_password, statusMessage, spinnerButton);
 }
